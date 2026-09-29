@@ -299,7 +299,7 @@ GlowNest-D2C-Beauty-Analytics/
 │   └── Dataset/
 │
 ├── PowerBI/
-│   └── GlowNest_Beauty_Customer_Analytics.pbix
+│   └── GlowNest_Consumer_Analytics.pbix
 │
 └── SQL/
     ├── 01_create_database.sql
