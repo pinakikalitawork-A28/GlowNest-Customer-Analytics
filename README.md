@@ -1,4 +1,4 @@
-# GlowNest — D2C Beauty & Customer Analytics
+# GlowNest — Customer Analytics: Customer Segmentation, Churn, Retention, Cohort, Funnel & Customer Value Analysis
 
 ## Project Overview
 
