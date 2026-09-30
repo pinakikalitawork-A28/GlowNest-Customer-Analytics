@@ -204,6 +204,22 @@ Focus:
 - Top 10 Products — Revenue Concentration (Pareto analysis)
 
 ---
+## Dashboard Preview
+
+### 1. Executive Overview
+![Executive Overview](Screenshots/01_Executive_Overview.png)
+
+### 2. Customer Segmentation & Value
+![Customer Segmentation](Screenshots/02_Customer_Segmentation.png)
+
+### 3. Customer Retention & Cohort Analysis
+![Customer Retention & Cohort](Screenshots/03_Customer_Retention_Cohort.png)
+
+### 4. Customer Journey / Funnel Analysis
+![Customer Journey / Funnel](Screenshots/04_Customer_Journey_Funnel.png)
+
+### 5. Product & Sales Performance
+![Product & Sales Performance](Screenshots/05_Product_Sales_Performance.png)
 
 ## Key Results
 
