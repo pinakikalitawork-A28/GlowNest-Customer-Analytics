@@ -230,7 +230,7 @@ The current synthetic dataset produces the following portfolio-level results:
 | Customers | 2,000 |
 | Orders | 5,315 |
 | Units Sold | 7,399 |
-| Order Revenue | ~₹3.09M |
+| Order Revenue | ~₹3.08M |
 | Average Order Value | ₹580.75 |
 | Return Rate | 5.16% |
 | Repeat Customers | 1,115 |
@@ -306,16 +306,27 @@ The customer journey shows where potential customers are lost between browsing a
 ## Project Structure
 
 ```text
-GlowNest-D2C-Beauty-Analytics/
+GlowNest-Customer-Analytics/
 │
 ├── README.md
 │
-├── Excel/
-│   ├── Clean_Dataset/
-│   └── Dataset/
+├── Data/
+│   └── Clean_Dataset/
+│       ├── customers.csv
+│       ├── orders.csv
+│       ├── products.csv
+│       ├── marketing_campaign.csv
+│       └── customer_funnel.csv
 │
 ├── PowerBI/
 │   └── GlowNest_Consumer_Analytics.pbix
+│
+├── Screenshots/
+│   ├── 01_Executive_Overview.png
+│   ├── 02_Customer_Segmentation.png
+│   ├── 03_Customer_Retention_Cohort.png
+│   ├── 04_Customer_Journey_Funnel.png
+│   └── 05_Product_Sales_Performance.png
 │
 └── SQL/
     ├── 01_create_database.sql
