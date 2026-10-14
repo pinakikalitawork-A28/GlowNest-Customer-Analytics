@@ -1,315 +1,235 @@
-# GlowNest — Customer Analytics: Customer Segmentation, Churn, Retention, Cohort, Funnel & Customer Value Analysis
+# GlowNest — Customer Analytics: From Growth to Profitability
 
 ## Project Overview
 
 **From Growth to Profitability: A Data-Driven Analysis of India's Beauty & Cosmetics Industry**
 
-This portfolio project analyses a synthetic D2C beauty brand, **GlowNest**, to understand how customer behaviour, retention, marketing efficiency, product performance and unit economics influence sustainable growth.
+This portfolio project analyses synthetic data for GlowNest, a fictional direct-to-consumer (D2C) beauty brand. It explores customer behaviour, retention, purchase patterns, product performance, and contribution margin to identify opportunities for sustainable growth.
 
-The project is designed around a core business question:
+**Business question:** Why are customers becoming inactive, which customer segments are most valuable, where do customers drop off, and what actions could improve retention and revenue?
 
-> **Why are customers churning, which customers are most valuable, where are they dropping off, and what actions can improve retention and revenue?**
-
-The broader business case uses India's beauty and cosmetics industry as the context, with SUGAR Cosmetics as a case-study reference. **GlowNest data is synthetic and is not actual SUGAR customer, sales or financial data.**
-
----
+GlowNest is a fictional brand. SUGAR Cosmetics provides business-case context only; none of the data represents actual SUGAR Cosmetics customers, transactions, or financial results.
 
 ## Business Problem
 
-Rapid revenue growth does not automatically translate into sustainable profitability. A D2C beauty business can face high acquisition costs, weak repeat purchasing, discount pressure, returns, marketplace costs and operational expenses.
+Revenue growth alone does not guarantee sustainable profitability. A D2C business may experience declining repeat purchases, customer churn, heavy discounting, product returns, and increasing operating costs.
 
-This project investigates:
+This project examines customer and sales data to understand these challenges and support data-driven decisions.
 
-- Customer retention and churn
-- Repeat purchase behaviour
-- Customer segmentation and RFM analysis
-- Customer value / LTV
-- Marketing spend, CAC and ROAS
-- Purchase-funnel performance
-- Product and category performance
-- Return rates
-- Contribution-margin economics
-- Revenue concentration across leading products
+## Project Objectives
 
----
-
-## Objectives
-
-1. Measure overall sales and customer performance.
-2. Identify high-value and at-risk customer segments.
-3. Analyse repeat purchase and churn behaviour.
-4. Understand customer cohort retention.
-5. Evaluate acquisition-channel and marketing efficiency.
-6. Identify top-performing product categories and products.
-7. Analyse the purchase funnel and conversion.
-8. Connect growth metrics with profitability-oriented measures.
-
----
+- Analyse customer purchasing behaviour and revenue trends.
+- Segment customers using RFM analysis.
+- Examine repeat purchasing and customer inactivity.
+- Measure monthly cohort retention.
+- Analyse the customer purchase funnel.
+- Evaluate product, category, and return-rate performance.
+- Calculate contribution margin for delivered orders.
+- Build interactive dashboards to communicate business insights.
 
 ## Dataset
 
-The project uses five relational synthetic datasets covering **2024–2025**:
+The project uses five relational synthetic datasets covering 2024–2025.
 
 | Table | Rows | Purpose |
 |---|---:|---|
-| Customers | 2,000 | Customer profile, acquisition, status, tier and lifetime metrics |
-| Orders | 5,315 | Transaction-level sales, discounts, returns and variable costs |
-| Products | 20 | Product category, pricing, COGS and product attributes |
-| Marketing Campaigns | 150 | Campaign spend, reach, conversions, new customers and reported revenue |
-| Customer Funnel | 11,157 | Website-to-purchase customer journey events |
+| Customers | 2,000 | Customer profiles, status, acquisition, and purchase summaries |
+| Orders | 5,315 | Transactions, discounts, order status, and variable costs |
+| Products | 20 | Product categories, prices, and cost information |
+| Marketing Campaigns | 150 | Campaign spend, reach, conversions, and reported revenue |
+| Customer Funnel | 11,157 | Customer journey events |
 
-### Key relationships
-
-- `customers.customer_id` → `orders.customer_id`
-- `products.product_id` → `orders.product_id`
-- `customers.customer_id` → `customer_funnel.customer_id`
-- `marketing_campaigns.campaign_id` → `customer_funnel.campaign_id`
-
-The SQL validation workflow checks for orphan records across these relationships.
-
----
+The datasets were designed for portfolio analysis and do not represent real company data.
 
 ## Data Preparation
 
-### Excel / Power Query
-
-The Excel workflow was used for data preparation and quality checks, including:
-
-- Importing CSV files
-- Correcting data types
-- Date parsing
-- Missing-value handling
-- Standardising categorical fields
-- Duplicate checks
-- Numeric range validation
-- Business-logic checks
-- Preparing clean datasets for analysis and database loading
+### Excel and Power Query
+- Imported CSV files and checked data quality.
+- Corrected data types and date formats.
+- Checked missing values and duplicates.
+- Standardised categorical fields.
+- Reviewed numeric ranges and potential inconsistencies.
+- Prepared datasets for SQL Server.
 
 ### SQL Server
+The datasets were loaded into the `D2C_Beauty_Analytics` database.
 
-Cleaned data was loaded into a relational SQL Server database:
-
-`D2C_Beauty_Analytics`
-
-The SQL workflow is organised into:
-
-1. Database creation
-2. Table creation
-3. Data loading
-4. Data validation
-5. Business analysis
-6. Customer analytics
-
----
+The SQL workflow includes database and table creation, data loading, validation, business analysis, and customer analytics.
 
 ## SQL Analysis
 
-The final SQL work contains **37 analytical questions** covering:
+The project contains 37 analytical questions across sales, customer, and product performance.
 
-### Sales & Revenue
-- Overall performance
-- Monthly revenue and orders
-- Acquisition-channel performance
-- Customer-tier performance
-- Category revenue
-- Product returns
-- Top customers
+### Sales and Revenue
+- Monthly revenue and order trends.
+- Revenue by acquisition channel and customer tier.
+- Product and category performance.
+- Product returns and top customers.
 
 ### Customer Analytics
-- Repeat purchase rate
-- Churn rate
-- Customer status
-- Customer frequency
-- Customer monetary value
-- Recency analysis
-- Acquisition-channel value
+- Customer purchase frequency and monetary value.
+- Repeat purchase behaviour.
+- Customer inactivity and churn analysis.
+- Customer value by acquisition channel.
 
-### RFM Analysis
-- RFM scoring
-- RFM segmentation
-- Segment size
-- Segment revenue
-- Average customer value
-- Segment-level churn
+### RFM Segmentation
+- Recency, frequency, and monetary scoring.
+- Six customer segments: Champions, Loyal Customers, Potential Loyalists, At Risk, Lost Customers, and Needs Attention.
+- Customer counts and revenue by segment.
+- Average customer value by segment.
 
-### Cohort Analysis
-- Cohort assignment
-- Cohort size
-- Monthly activity
-- Retention rates
-- Post-acquisition active-customer patterns
+RFM scores use fixed thresholds, with a common reference date of 31 December 2025.
 
-### Purchase Journey
-- Purchase frequency distribution
-- Purchase conversion
-- Repeat-purchase conversion
-- Churn by purchase frequency
-- Churn by preferred channel and customer tier
+### Cohort and Retention Analysis
+- First-purchase cohort assignment.
+- Monthly cohort size and activity.
+- Customer retention rates.
+- Post-acquisition active-customer patterns.
 
----
+### Purchase and Churn Analysis
+- Purchase frequency distribution.
+- Purchase and repeat-purchase conversion rates.
+- Churn by purchase frequency.
+- Churn by preferred channel and customer tier.
 
 ## Power BI Dashboard
 
-The final Power BI report contains **five pages**.
+The interactive Power BI report contains five pages.
 
 ### 1. Executive Overview
-
-Focus:
-- Total Revenue
-- Total Orders
-- Average Order Value
-- Contribution Margin %
-- Customer Status
-- Monthly Revenue Growth
+- Total revenue and total orders.
+- Average order value.
+- Contribution margin for delivered orders.
+- Customer status distribution.
+- Monthly revenue growth.
 
 ### 2. Customer Segmentation & Value
-
-Focus:
-- Total Customers
-- Repeat Customers
-- Repeat Purchase Rate
-- Average Customer Value
-- RFM customer distribution
-- Revenue by RFM segment
-- Average customer revenue
-- RFM churn
-- Revenue by customer tier
+- RFM customer distribution.
+- Revenue by RFM segment.
+- Average customer value.
+- Customer and revenue comparisons across segments and tiers.
 
 ### 3. Customer Retention & Cohort Analysis
-
-Focus:
-- Overall Churn Rate
-- Inactive Customers
-- Cohort Retention Analysis
-- Repeat Purchase Rate by Customer Tier
-- Churn Rate by Customer Tier
+- Customer inactivity and churn indicators.
+- Cohort retention analysis.
+- Repeat purchase and churn comparisons by customer tier.
 
 ### 4. Customer Journey / Funnel Analysis
+- Customers reaching purchase.
+- Customer journey funnel.
+- Conversion rates by acquisition channel.
+- Orders by acquisition channel.
 
-Focus:
-- CAC
-- ROAS
-- Funnel Conversion Rate
-- Marketing Spend
-- Customer Journey Funnel
-- Conversion Rate by Acquisition Channel
-- Orders by Acquisition Channel
+The purchase and repeat-purchase analysis is distinct from the full customer journey funnel.
 
 ### 5. Product & Sales Performance
+- Revenue by product category.
+- Units sold by category.
+- Return rates by category.
+- Top 10 products and revenue concentration (Pareto analysis).
 
-Focus:
-- Revenue by Product Category
-- Units Sold by Product Category
-- Return Rate by Product Category
-- Top 10 Products — Revenue Concentration (Pareto analysis)
+## Dashboard Screenshots
 
----
-## Dashboard Preview
-
-### 1. Executive Overview
+### Executive Overview
 ![Executive Overview](Screenshots/01_Executive_Overview.png)
 
-### 2. Customer Segmentation & Value
+### Customer Segmentation & Value
 ![Customer Segmentation](Screenshots/02_Customer_Segmentation.png)
 
-### 3. Customer Retention & Cohort Analysis
+### Customer Retention & Cohort Analysis
 ![Customer Retention & Cohort](Screenshots/03_Customer_Retention_Cohort.png)
 
-### 4. Customer Journey / Funnel Analysis
+### Customer Journey / Funnel Analysis
 ![Customer Journey / Funnel](Screenshots/04_Customer_Journey_Funnel.png)
 
-### 5. Product & Sales Performance
+### Product & Sales Performance
 ![Product & Sales Performance](Screenshots/05_Product_Sales_Performance.png)
 
 ## Key Results
 
-The current synthetic dataset produces the following portfolio-level results:
+The following figures are based on the current synthetic dataset and report calculations.
 
 | Metric | Result |
 |---|---:|
 | Customers | 2,000 |
 | Orders | 5,315 |
 | Units Sold | 7,399 |
-| Order Revenue | ~₹3.08M |
+| Order Revenue | Approximately ₹3.08M |
 | Average Order Value | ₹580.75 |
 | Return Rate | 5.16% |
 | Repeat Customers | 1,115 |
 | Repeat Purchase Rate | 55.75% |
 | Inactive Customers | 349 |
 | Churn Rate | 17.45% |
-| Marketing Spend | ~₹4.50M |
-| CAC | ₹45.75 |
-| ROAS | 37.73 |
-| Funnel Conversion Rate | 22.68% |
+| Marketing Spend | ₹4.50M |
+| Customers Reaching Purchase | 22.68% |
+| Contribution Margin — Delivered Orders | 36.86% |
 
-### Selected analytical observations
+### Contribution Margin Calculation
 
-- Revenue accelerates strongly through 2025, with monthly revenue reaching approximately **₹0.52M in December 2025**.
-- **Skincare** is the largest category, generating approximately **₹1.70M revenue** and **3,853 units sold**.
-- The top five products account for approximately **64% of the revenue generated by the Top 10 products**, indicating concentration among leading products.
-- **Champions** have the highest average customer revenue within the current RFM output, while **Lost Customers** show the highest churn rate.
-- Repeat-purchase rates are relatively close across customer tiers, while churn is higher for Regular and Value customers than for Premium customers.
-- The funnel reports a **22.68% conversion rate**, with meaningful drop-off across the journey from visit to purchase.
-- Acquisition channels show different patterns in conversion and order volume, demonstrating why channel performance should not be assessed using a single metric.
+Contribution margin for delivered orders is calculated as:
 
----
+**Contribution Margin % = Delivered-order contribution profit ÷ Delivered-order revenue × 100**
+
+Contribution profit is calculated after deducting product cost of goods sold (COGS), shipping costs, marketplace commission, and fulfilment costs from delivered-order revenue. Cancelled and returned orders are excluded from this calculation.
+
+## Selected Analytical Observations
+
+- Monthly revenue increases through 2025, reaching approximately ₹0.52M in December 2025.
+- Skincare is the largest category in the synthetic dataset, generating approximately ₹1.70M in revenue.
+- RFM segmentation distinguishes high-value customers from customers who may need re-engagement.
+- Cohort analysis helps evaluate how customer activity changes after acquisition.
+- Purchase-funnel analysis helps identify potential drop-off points.
+- Product and category return rates highlight areas for further investigation.
+
+These observations describe the simulated dataset and should not be interpreted as findings about an actual business.
 
 ## Business Implications
 
-The analysis points toward several areas for management attention:
-
 ### Retention
-A meaningful inactive/customer-churn population creates an opportunity to improve repeat purchasing and reactivate high-value customers.
+Use customer status and purchase history to identify opportunities for customer reactivation and repeat purchasing.
 
-### Customer Value
-RFM analysis helps separate high-value customers from customers requiring re-engagement and retention efforts.
-
-### Marketing Efficiency
-CAC and ROAS provide a way to evaluate acquisition efficiency alongside conversion and order volume.
-
-### Product Concentration
-A large share of Top-10 revenue comes from the leading products, creating both a strength and a concentration risk.
-
-### Product Returns
-Category-level return rates help identify areas where product experience, customer expectations or fulfilment may require deeper investigation.
+### Customer Segmentation
+Use RFM segments to tailor retention and engagement strategies to different customer groups.
 
 ### Funnel Optimisation
-The customer journey shows where potential customers are lost between browsing and purchase, providing a basis for conversion optimisation.
+Investigate the stages where customers drop off and identify opportunities to improve conversion.
 
----
+### Product Performance
+Use category revenue, units sold, and return rates to prioritise further product-level investigation.
 
-## Important Data & Metric Notes
+### Profitability
+Use delivered-order contribution margin to understand revenue remaining after the specified variable costs.
 
-- All transactional and customer data in this portfolio project is **synthetic**.
-- The synthetic data is intended for analytical demonstration and portfolio use.
-- SUGAR Cosmetics is used for **business-case context**, not as the source of the customer or transaction data.
-- Marketing metrics use the **campaign-level marketing dataset** (`spend`, `new_customers`, `revenue_generated`). They should be interpreted separately from the order-revenue series unless the two datasets are explicitly reconciled.
-- Contribution margin and customer-value/LTV measures are modelled from the available transactional and customer fields in Power BI.
+## Known Limitations
 
----
+- All datasets are synthetic and do not represent actual company data.
+- Marketing campaign data has not been reconciled with customer and order records. Therefore, Customer Acquisition Cost (CAC) and Return on Ad Spend (ROAS) are not reported.
+- Churn analysis uses the customer status labels available in the dataset.
+- Customer-level revenue and order-level revenue may differ because they are calculated from different tables and may use different aggregation logic.
+- Potential duplicate order records with different order IDs have been flagged for verification. The original dataset has been retained unchanged; these records have not been independently confirmed as duplicates.
+- The 22.68% funnel metric represents customers reaching purchase as defined by the report. It should not be interpreted as a fully validated end-to-end conversion rate without reconciling funnel events to customer and order records.
+- Contribution margin is calculated for delivered orders only; it is not a complete measure of company profitability.
 
-## Tools & Technologies
+## Tools and Technologies
 
-- **Excel**
-- **Power Query**
-- **SQL Server / T-SQL**
-- **Power BI**
-- DAX measures
+- Excel
+- Power Query
+- SQL Server / T-SQL
+- Power BI
+- DAX
 - Relational data modelling
-- RFM analysis
-- Cohort analysis
+- Data cleaning and validation
+- RFM segmentation
+- Cohort and retention analysis
 - Funnel analysis
 - Pareto analysis
-
----
 
 ## Project Structure
 
 ```text
 GlowNest-Customer-Analytics/
-│
 ├── README.md
-│
 ├── Data/
 │   └── Clean_Dataset/
 │       ├── customers.csv
@@ -317,17 +237,14 @@ GlowNest-Customer-Analytics/
 │       ├── products.csv
 │       ├── marketing_campaign.csv
 │       └── customer_funnel.csv
-│
 ├── PowerBI/
 │   └── GlowNest_Consumer_Analytics.pbix
-│
 ├── Screenshots/
 │   ├── 01_Executive_Overview.png
 │   ├── 02_Customer_Segmentation.png
 │   ├── 03_Customer_Retention_Cohort.png
 │   ├── 04_Customer_Journey_Funnel.png
 │   └── 05_Product_Sales_Performance.png
-│
 └── SQL/
     ├── 01_create_database.sql
     ├── 02_create_tables.sql
@@ -337,18 +254,14 @@ GlowNest-Customer-Analytics/
     └── 06_customer_analytics.sql
 ```
 
----
-
 ## What This Project Demonstrates
 
 This project demonstrates an end-to-end analytics workflow:
 
-**Raw Data → Data Cleaning → Data Validation → Relational SQL Database → SQL Analysis → Customer Analytics → Power BI Data Modelling → Dashboard → Business Insights**
+**Raw Data → Data Cleaning → Data Validation → SQL Database → SQL Analysis → Customer Analytics → Power BI Data Modelling → Interactive Dashboards → Business Insights**
 
-The objective is not only to report revenue, but to connect **growth, customer behaviour, marketing efficiency and profitability-oriented metrics** into one decision-support analysis.
-
----
+It showcases the use of Excel, SQL Server, and Power BI to transform synthetic business data into customer and sales insights.
 
 ## Disclaimer
 
-This is a **portfolio analytics project using synthetic data**. The figures, customer records, transactions and campaign results are simulated for analytical demonstration and should not be treated as actual company financial or customer data.
+This is a portfolio project using synthetic data. All customer records, transactions, campaign results, and financial figures are simulated for analytical demonstration and should not be treated as actual company data.
