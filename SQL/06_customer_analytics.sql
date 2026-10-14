@@ -19,9 +19,29 @@ RFM_Scored AS
 (
     SELECT
         *,
-        NTILE(5) OVER (ORDER BY recency_days DESC) AS recency_score,
-        NTILE(5) OVER (ORDER BY frequency ASC) AS frequency_score,
-        NTILE(5) OVER (ORDER BY monetary_value ASC) AS monetary_score
+        CASE
+    WHEN recency_days <= 30 THEN 5
+    WHEN recency_days <= 90 THEN 4
+    WHEN recency_days <= 180 THEN 3
+    WHEN recency_days <= 365 THEN 2
+    ELSE 1
+END AS recency_score,
+
+CASE
+    WHEN frequency >= 8 THEN 5
+    WHEN frequency >= 6 THEN 4
+    WHEN frequency >= 4 THEN 3
+    WHEN frequency >= 2 THEN 2
+    ELSE 1
+END AS frequency_score,
+
+CASE
+    WHEN monetary_value >= 8000 THEN 5
+    WHEN monetary_value >= 5000 THEN 4
+    WHEN monetary_value >= 3000 THEN 3
+    WHEN monetary_value >= 1500 THEN 2
+    ELSE 1
+END AS monetary_score
     FROM RFM_Base
 )
 SELECT
@@ -55,9 +75,29 @@ WITH RFM_Base AS (
 RFM_Scored AS (
     SELECT
         *,
-        NTILE(5) OVER (ORDER BY recency_days DESC) AS recency_score,
-        NTILE(5) OVER (ORDER BY frequency ASC) AS frequency_score,
-        NTILE(5) OVER (ORDER BY monetary_value ASC) AS monetary_score
+       CASE
+    WHEN recency_days <= 30 THEN 5
+    WHEN recency_days <= 90 THEN 4
+    WHEN recency_days <= 180 THEN 3
+    WHEN recency_days <= 365 THEN 2
+    ELSE 1
+END AS recency_score,
+
+CASE
+    WHEN frequency >= 8 THEN 5
+    WHEN frequency >= 6 THEN 4
+    WHEN frequency >= 4 THEN 3
+    WHEN frequency >= 2 THEN 2
+    ELSE 1
+END AS frequency_score,
+
+CASE
+    WHEN monetary_value >= 8000 THEN 5
+    WHEN monetary_value >= 5000 THEN 4
+    WHEN monetary_value >= 3000 THEN 3
+    WHEN monetary_value >= 1500 THEN 2
+    ELSE 1
+END AS monetary_score
     FROM RFM_Base
 )
 
@@ -71,30 +111,30 @@ SELECT
     recency_score,
     frequency_score,
     monetary_score,
-    CASE
-        WHEN recency_score = 5
-             AND frequency_score = 5
-             AND monetary_score = 5
-            THEN 'Champions'
+CASE
+    WHEN recency_score >= 4
+         AND frequency_score >= 4
+         AND monetary_score >= 4
+        THEN 'Champions'
 
-        WHEN recency_score >= 4
-             AND frequency_score >= 4
-            THEN 'Loyal Customers'
+    WHEN recency_score >= 3
+         AND frequency_score >= 3
+        THEN 'Loyal Customers'
 
-        WHEN recency_score >= 4
-             AND frequency_score <= 3
-            THEN 'Potential Loyalists'
+    WHEN recency_score >= 4
+         AND frequency_score <= 2
+        THEN 'Potential Loyalists'
 
-        WHEN recency_score <= 2
-             AND frequency_score >= 4
-            THEN 'At Risk'
+    WHEN recency_score <= 2
+         AND frequency_score >= 3
+        THEN 'At Risk'
 
-        WHEN recency_score <= 2
-             AND frequency_score <= 2
-            THEN 'Lost Customers'
+    WHEN recency_score <= 2
+         AND frequency_score <= 2
+        THEN 'Lost Customers'
 
-        ELSE 'Needs Attention'
-    END AS rfm_segment
+    ELSE 'Needs Attention'
+END AS rfm_segment
 
 FROM RFM_Scored
 ORDER BY monetary_value DESC;
@@ -114,39 +154,59 @@ WITH RFM_Base AS (
 RFM_Scored AS (
     SELECT
         *,
-        NTILE(5) OVER (ORDER BY recency_days DESC) AS recency_score,
-        NTILE(5) OVER (ORDER BY frequency ASC) AS frequency_score,
-        NTILE(5) OVER (ORDER BY monetary_value ASC) AS monetary_score
+       CASE
+    WHEN recency_days <= 30 THEN 5
+    WHEN recency_days <= 90 THEN 4
+    WHEN recency_days <= 180 THEN 3
+    WHEN recency_days <= 365 THEN 2
+    ELSE 1
+END AS recency_score,
+
+CASE
+    WHEN frequency >= 8 THEN 5
+    WHEN frequency >= 6 THEN 4
+    WHEN frequency >= 4 THEN 3
+    WHEN frequency >= 2 THEN 2
+    ELSE 1
+END AS frequency_score,
+
+CASE
+    WHEN monetary_value >= 8000 THEN 5
+    WHEN monetary_value >= 5000 THEN 4
+    WHEN monetary_value >= 3000 THEN 3
+    WHEN monetary_value >= 1500 THEN 2
+    ELSE 1
+END AS monetary_score
     FROM RFM_Base
 ),
 
 RFM_Segmented AS (
     SELECT
         *,
-        CASE
-            WHEN recency_score = 5
-                 AND frequency_score = 5
-                 AND monetary_score = 5
-                THEN 'Champions'
+      CASE
+    WHEN recency_score >= 4
+         AND frequency_score >= 4
+         AND monetary_score >= 4
+        THEN 'Champions'
 
-            WHEN recency_score >= 4
-                 AND frequency_score >= 4
-                THEN 'Loyal Customers'
+    WHEN recency_score >= 3
+         AND frequency_score >= 3
+        THEN 'Loyal Customers'
 
-            WHEN recency_score >= 4
-                 AND frequency_score <= 3
-                THEN 'Potential Loyalists'
+    WHEN recency_score >= 4
+         AND frequency_score <= 2
+        THEN 'Potential Loyalists'
 
-            WHEN recency_score <= 2
-                 AND frequency_score >= 4
-                THEN 'At Risk'
+    WHEN recency_score <= 2
+         AND frequency_score >= 3
+        THEN 'At Risk'
 
-            WHEN recency_score <= 2
-                 AND frequency_score <= 2
-                THEN 'Lost Customers'
+    WHEN recency_score <= 2
+         AND frequency_score <= 2
+        THEN 'Lost Customers'
 
-            ELSE 'Needs Attention'
-        END AS rfm_segment
+    ELSE 'Needs Attention'
+END AS rfm_segment
     FROM RFM_Scored
 )
 
@@ -172,39 +232,59 @@ WITH RFM_Base AS (
 RFM_Scored AS (
     SELECT
         *,
-        NTILE(5) OVER (ORDER BY recency_days DESC) AS recency_score,
-        NTILE(5) OVER (ORDER BY frequency ASC) AS frequency_score,
-        NTILE(5) OVER (ORDER BY monetary_value ASC) AS monetary_score
+       CASE
+    WHEN recency_days <= 30 THEN 5
+    WHEN recency_days <= 90 THEN 4
+    WHEN recency_days <= 180 THEN 3
+    WHEN recency_days <= 365 THEN 2
+    ELSE 1
+END AS recency_score,
+
+CASE
+    WHEN frequency >= 8 THEN 5
+    WHEN frequency >= 6 THEN 4
+    WHEN frequency >= 4 THEN 3
+    WHEN frequency >= 2 THEN 2
+    ELSE 1
+END AS frequency_score,
+
+CASE
+    WHEN monetary_value >= 8000 THEN 5
+    WHEN monetary_value >= 5000 THEN 4
+    WHEN monetary_value >= 3000 THEN 3
+    WHEN monetary_value >= 1500 THEN 2
+    ELSE 1
+END AS monetary_score
     FROM RFM_Base
 ),
 
 RFM_Segmented AS (
     SELECT
         *,
-        CASE
-            WHEN recency_score = 5
-                 AND frequency_score = 5
-                 AND monetary_score = 5
-                THEN 'Champions'
+       CASE
+    WHEN recency_score >= 4
+         AND frequency_score >= 4
+         AND monetary_score >= 4
+        THEN 'Champions'
 
-            WHEN recency_score >= 4
-                 AND frequency_score >= 4
-                THEN 'Loyal Customers'
+    WHEN recency_score >= 3
+         AND frequency_score >= 3
+        THEN 'Loyal Customers'
 
-            WHEN recency_score >= 4
-                 AND frequency_score <= 3
-                THEN 'Potential Loyalists'
+    WHEN recency_score >= 4
+         AND frequency_score <= 2
+        THEN 'Potential Loyalists'
 
-            WHEN recency_score <= 2
-                 AND frequency_score >= 4
-                THEN 'At Risk'
+    WHEN recency_score <= 2
+         AND frequency_score >= 3
+        THEN 'At Risk'
 
-            WHEN recency_score <= 2
-                 AND frequency_score <= 2
-                THEN 'Lost Customers'
+    WHEN recency_score <= 2
+         AND frequency_score <= 2
+        THEN 'Lost Customers'
 
-            ELSE 'Needs Attention'
-        END AS rfm_segment
+    ELSE 'Needs Attention'
+END AS rfm_segment
     FROM RFM_Scored
 )
 
@@ -232,39 +312,59 @@ WITH RFM_Base AS (
 RFM_Scored AS (
     SELECT
         *,
-        NTILE(5) OVER (ORDER BY recency_days DESC) AS recency_score,
-        NTILE(5) OVER (ORDER BY frequency ASC) AS frequency_score,
-        NTILE(5) OVER (ORDER BY monetary_value ASC) AS monetary_score
+       CASE
+    WHEN recency_days <= 30 THEN 5
+    WHEN recency_days <= 90 THEN 4
+    WHEN recency_days <= 180 THEN 3
+    WHEN recency_days <= 365 THEN 2
+    ELSE 1
+END AS recency_score,
+
+CASE
+    WHEN frequency >= 8 THEN 5
+    WHEN frequency >= 6 THEN 4
+    WHEN frequency >= 4 THEN 3
+    WHEN frequency >= 2 THEN 2
+    ELSE 1
+END AS frequency_score,
+
+CASE
+    WHEN monetary_value >= 8000 THEN 5
+    WHEN monetary_value >= 5000 THEN 4
+    WHEN monetary_value >= 3000 THEN 3
+    WHEN monetary_value >= 1500 THEN 2
+    ELSE 1
+END AS monetary_score
     FROM RFM_Base
 ),
 
 RFM_Segmented AS (
     SELECT
         *,
-        CASE
-            WHEN recency_score = 5
-                 AND frequency_score = 5
-                 AND monetary_score = 5
-                THEN 'Champions'
+       CASE
+    WHEN recency_score >= 4
+         AND frequency_score >= 4
+         AND monetary_score >= 4
+        THEN 'Champions'
 
-            WHEN recency_score >= 4
-                 AND frequency_score >= 4
-                THEN 'Loyal Customers'
+    WHEN recency_score >= 3
+         AND frequency_score >= 3
+        THEN 'Loyal Customers'
 
-            WHEN recency_score >= 4
-                 AND frequency_score <= 3
-                THEN 'Potential Loyalists'
+    WHEN recency_score >= 4
+         AND frequency_score <= 2
+        THEN 'Potential Loyalists'
 
-            WHEN recency_score <= 2
-                 AND frequency_score >= 4
-                THEN 'At Risk'
+    WHEN recency_score <= 2
+         AND frequency_score >= 3
+        THEN 'At Risk'
 
-            WHEN recency_score <= 2
-                 AND frequency_score <= 2
-                THEN 'Lost Customers'
+    WHEN recency_score <= 2
+         AND frequency_score <= 2
+        THEN 'Lost Customers'
 
-            ELSE 'Needs Attention'
-        END AS rfm_segment
+    ELSE 'Needs Attention'
+END AS rfm_segment
     FROM RFM_Scored
 )
 
@@ -602,4 +702,5 @@ FROM customers
 GROUP BY
     customer_tier,
     preferred_channel
+
 ORDER BY churn_rate_percent DESC;
